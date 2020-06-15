@@ -72,14 +72,14 @@ export function buildClientId(clientInfo: {
       );
     }
   }
-  return `${clientInfo.app}#${clientInfo.os}#${clientInfo.device}#${clientInfo.device_id}`;
+  return JSON.stringify(clientInfo);
 }
 
 export function deconstructClientId(clientId: string): ClientIdConstituents {
   if (!clientId || clientId.split('#').length !== 4) {
     console.error(`Attempted to deconstruct invalid clientId: "${clientId}"`);
   }
-  const [app, os, device, device_id] = clientId.split('#');
+  const { app, os, device, device_id } = JSON.parse(clientId);
   return {
     app,
     os,
